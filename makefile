@@ -13,7 +13,10 @@ structs: $(CHEATSHEET_DIR)/structs.c
 formatting: $(CHEATSHEET_DIR)/formatting.c
 	$(C_COMPILER) -g $(CHEATSHEET_DIR)/formatting.c -o formatting
 
-cheatsheet: pointers structs formatting
+input-and-output: $(CHEATSHEET_DIR)/input-and-output.c
+	$(C_COMPILER) -g $(CHEATSHEET_DIR)/input-and-output.c -o input-and-output
+
+cheatsheet: pointers structs formatting input-and-output
 
 clean:
 	rm -f pointers
@@ -22,3 +25,5 @@ clean:
 	rm -rf structs.dSYM
 	rm -f formatting
 	rm -rf formatting.dSYM
+	rm -f input-and-output
+	rm -rf input-and-output.dSYM
