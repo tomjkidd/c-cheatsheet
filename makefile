@@ -28,12 +28,20 @@ memory: $(CHEATSHEET_DIR)/memory.c
 functions: $(CHEATSHEET_DIR)/functions.c
 	$(C_COMPILER) -g $(CHEATSHEET_DIR)/functions.c -o functions
 
-cheatsheet: pointers structs formatting input-and-output headers memory functions
+static-headers: headers.o $(CHEATSHEET_DIR)/structs.c
+# Create a static library/archive, which is just a collection of object files.
+	$(C_COMPILER) -g -H -c $(CHEATSHEET_DIR)/structs.c
+	ar -rcs $(LIB_DIR)/libtkheaders.a headers.o structs.o
+# Link everything together. This is static linking.
+	$(C_COMPILER) -g use-headers.o -L$(LIB_DIR) -ltkheaders -o use-headers-static
+
+cheatsheet: pointers structs formatting input-and-output headers memory functions static-headers
 
 clean:
 	rm -f pointers
 	rm -rf pointers.dSYM
 	rm -f structs
+	rm -f structs.o
 	rm -rf structs.dSYM
 	rm -f formatting
 	rm -rf formatting.dSYM
@@ -47,3 +55,6 @@ clean:
 	rm -rf memory.dSYM
 	rm -f functions
 	rm -rf functions.dSYM
+	rm -f $(LIB_DIR)/libtkheaders.a
+	rm -f use-headers-static
+	rm -rf use-headers-static.dSYM
