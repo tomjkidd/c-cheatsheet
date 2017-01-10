@@ -52,7 +52,10 @@ dynamiclib: $(CHEATSHEET_DIR)/headers.c
 # Static lib code is like a cake, once it's baked, it's pieces can not be changed.
 # Dynamic lib code is like a puzzle. It's pieces can be substituted at runtime.
 
-cheatsheet: pointers structs formatting input-and-output headers memory functions static-headers dynamiclib
+processes: $(CHEATSHEET_DIR)/processes.c
+	$(C_COMPILER) -g $(CHEATSHEET_DIR)/processes.c -o processes
+
+cheatsheet: pointers structs formatting input-and-output headers memory functions static-headers dynamiclib processes
 
 clean:
 	rm -f pointers
@@ -79,3 +82,6 @@ clean:
 	rm -f use-dynamic-headers.o
 	rm -f $(LIB_DIR)/libheaders.dylib
 	rm -f use-dynamic-headers
+	rm -f processes
+	rm -rf processes.dSYM
+	rm -f process-output.txt
