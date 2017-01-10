@@ -22,7 +22,10 @@ headers: $(CHEATSHEET_DIR)/headers.h $(CHEATSHEET_DIR)/headers.c $(CHEATSHEET_DI
 # Link object files into executable
 	$(C_COMPILER) -g use-headers.o headers.o -o use-headers
 
-cheatsheet: pointers structs formatting input-and-output
+memory: $(CHEATSHEET_DIR)/memory.c
+	$(C_COMPILER) -g $(CHEATSHEET_DIR)/memory.c -o memory
+
+cheatsheet: pointers structs formatting input-and-output headers memory
 
 clean:
 	rm -f pointers
@@ -37,3 +40,5 @@ clean:
 	rm -f use-headers
 	rm -f use-headers.o
 	rm -rf use-headers.dSYM
+	rm -f memory
+	rm -rf memory.dSYM
