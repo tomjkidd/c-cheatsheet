@@ -25,7 +25,10 @@ headers: $(CHEATSHEET_DIR)/headers.h $(CHEATSHEET_DIR)/headers.c $(CHEATSHEET_DI
 memory: $(CHEATSHEET_DIR)/memory.c
 	$(C_COMPILER) -g $(CHEATSHEET_DIR)/memory.c -o memory
 
-cheatsheet: pointers structs formatting input-and-output headers memory
+functions: $(CHEATSHEET_DIR)/functions.c
+	$(C_COMPILER) -g $(CHEATSHEET_DIR)/functions.c -o functions
+
+cheatsheet: pointers structs formatting input-and-output headers memory functions
 
 clean:
 	rm -f pointers
@@ -42,3 +45,5 @@ clean:
 	rm -rf use-headers.dSYM
 	rm -f memory
 	rm -rf memory.dSYM
+	rm -f functions
+	rm -rf functions.dSYM
