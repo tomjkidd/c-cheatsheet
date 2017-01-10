@@ -35,6 +35,15 @@ static-headers: headers.o $(CHEATSHEET_DIR)/structs.c
 # Link everything together. This is static linking.
 	$(C_COMPILER) -g use-headers.o -L$(LIB_DIR) -ltkheaders -o use-headers-static
 
+show-archive-symbols: $(LIB_DIR)/libtkheaders.a
+	nm $(LIB_DIR)/libtkheaders.a
+
+show-archive-objects: $(LIB_DIR)/libtkheaders.a
+	ar -t $(LIB_DIR)/libtkheaders.a
+
+extract-archive-object: $(LIB_DIR)/libtkheaders.a
+	ar -x $(LIB_DIR)/libtkheaders.a headers.o
+
 cheatsheet: pointers structs formatting input-and-output headers memory functions static-headers
 
 clean:
