@@ -44,7 +44,15 @@ show-archive-objects: $(LIB_DIR)/libtkheaders.a
 extract-archive-object: $(LIB_DIR)/libtkheaders.a
 	ar -x $(LIB_DIR)/libtkheaders.a headers.o
 
-cheatsheet: pointers structs formatting input-and-output headers memory functions static-headers
+dynamiclib: $(CHEATSHEET_DIR)/headers.c
+	$(C_COMPILER) -g -fPIC -c $(CHEATSHEET_DIR)/headers.c -o dynamic-headers.o
+	$(C_COMPILER) -shared dynamic-headers.o -o $(LIB_DIR)/libheaders.dylib
+	$(C_COMPILER) -g -c $(CHEATSHEET_DIR)/use-headers.c -o use-dynamic-headers.o
+	$(C_COMPILER) -g use-dynamic-headers.o -L$(LIB_DIR) -lheaders -o use-dynamic-headers
+# Static lib code is like a cake, once it's baked, it's pieces can not be changed.
+# Dynamic lib code is like a puzzle. It's pieces can be substituted at runtime.
+
+cheatsheet: pointers structs formatting input-and-output headers memory functions static-headers dynamiclib
 
 clean:
 	rm -f pointers
@@ -67,3 +75,7 @@ clean:
 	rm -f $(LIB_DIR)/libtkheaders.a
 	rm -f use-headers-static
 	rm -rf use-headers-static.dSYM
+	rm -f dynamic-headers.o
+	rm -f use-dynamic-headers.o
+	rm -f $(LIB_DIR)/libheaders.dylib
+	rm -f use-dynamic-headers
